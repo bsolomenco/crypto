@@ -1,2 +1,4 @@
-CryptoPP_test/VS2017/.vs
-CryptoPP_test/VS2017/Release
+.vs
+Debug
+Release
+x64
