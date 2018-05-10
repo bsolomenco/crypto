@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\tst\main.cpp" />
+    <ClCompile Include="..\tst\DynLib.cpp" />
+    <ClCompile Include="..\tst\CryptHelper.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\tst\DynLib.hpp" />
+    <ClInclude Include="..\tst\File.hpp" />
+    <ClInclude Include="..\tst\CryptHelper.hpp" />
+  </ItemGroup>
+</Project>
