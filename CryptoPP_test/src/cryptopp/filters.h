@@ -1366,6 +1366,7 @@ public:
 		{return m_store.TransferAllTo2(*AttachedTransformation(), DEFAULT_CHANNEL, blocking);}
 	bool SourceExhausted() const
 		{return !m_store.AnyRetrievable() && !m_store.AnyMessages();}
+        //{return (!m_store.AnyRetrievable() || !m_store.AnyMessages());}
 	void SetAutoSignalPropagation(int propagation)
 		{m_store.SetAutoSignalPropagation(propagation);}
 	int GetAutoSignalPropagation() const
