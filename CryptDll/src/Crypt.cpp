@@ -25,20 +25,20 @@ extern "C"{//export undecorated names
         const unsigned char*        iv,                     //initial vector(8, 12 or 20 bytes long)
         size_t                      ivLen                   //iv's length (must be 8,12 or 20)
     ){
-        #pragma comment(linker, "/EXPORT:" __FUNCTION__ "=" __FUNCDNAME__ )
-        //TRC("");
+		#pragma comment(linker, "/EXPORT:" __FUNCTION__ "=" __FUNCDNAME__ )
+		//TRC("");
 
-        //checks
-        //...
+		//checks
+		//...
 
-        X::key      = key;
-        X::keyLen   = keyLen;
-        X::iv       = iv;
-        X::ivLen    = ivLen;
+		X::key      = key;
+		X::keyLen   = keyLen;
+		X::iv       = iv;
+		X::ivLen    = ivLen;
 
-       X::cipher.clear();
-       X::cipher.set_key(X::key, X::keyLen);
-       X::cipher.set_iv(X::iv, X::ivLen);
+		X::cipher.clear();
+		X::cipher.set_key(X::key, X::keyLen);
+		X::cipher.set_iv(X::iv, X::ivLen);
     }
 
     //--------------------------------------------------------------------------------
