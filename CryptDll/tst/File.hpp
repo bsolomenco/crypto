@@ -11,7 +11,11 @@ public:
         : _file(filename ? fopen(filename, mode) : 0)
     {}
 
-    ~File(){
+	File(const wchar_t* const filename=0, const wchar_t* const mode=L"rt")//wide char variant
+		: _file(filename ? _wfopen(filename, mode) : 0)
+	{}
+
+	~File(){
         if(_file)
             fclose(_file);
         _file = 0;
@@ -24,6 +28,12 @@ public:
         _file = fopen(filename, mode);
         return *this;
     }
+
+	File& operator()(const wchar_t* const filename, const wchar_t* const mode=L"rt") {
+		this->~File();//close
+		_file = _wfopen(filename, mode);
+		return *this;
+	}
 };
 
 #if 0//USAGE//================================================================================
