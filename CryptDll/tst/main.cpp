@@ -4,6 +4,7 @@
 #include <functional>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 #define O(...) fprintf(stderr, __VA_ARGS__)
 #define DBG(fmt, ...) O("DBG " fmt "[%s()]\n", __VA_ARGS__, __FUNCTION__)
 #define ERR(fmt, ...) O("ERR " fmt "[%s()]\n", __VA_ARGS__, __FUNCTION__)
@@ -35,49 +36,10 @@ int main(int argc, char** argv){
     constexpr size_t N = 1024 * 8;
     char buf[N] = {0};
 
-    static CryptHelper ch(argv[1], buf, N);
-
-    auto fnEncode = [](const char*fn){return ch.encodeStr(fn);};
-    auto fnDecode = [](const char*fn){return ch.decodeStr(fn);};
-    //auto& fnFunc = (restoreFlag ? fnDecode : fnEncode);
-    const char* (*fnFunc)(const char*) = fnEncode;
-    if(restoreFlag){
-        fnFunc = fnDecode;
-    }
-
-    fs::path srcPath(argv[2]);
-    if(fs::is_regular_file(srcPath)){
-        const char* dstFilename = fnFunc(srcPath.filename().string().data());
-        fs::path dstFilePath(dstDirPath / dstFilename);
-        O("    \"%s\" -> \"%s\"\n", srcPath.string().data(), dstFilePath.string().data());
-        File srcFile(srcPath.string().data(), "rb");
-        File dstFile(dstFilePath.string().data(), "wb");
-        ch(srcFile, dstFile);
-        return 0;
-    }
-
-    //source is a directory
-    int depth = 0;
-    fs::path relPath;
-    const char* dstFilename = nullptr;
-    for(fs::recursive_directory_iterator i(srcPath), end; i!=end; ++i){
-        dstFilename = fnFunc(i->path().filename().string().data());
-        O("    depth=%d\n", i.depth());
-        for(; depth>i.depth(); --depth){//back from a dir(s)
-            relPath = relPath.parent_path();
-        }
-        depth = i.depth();
-        if(fs::is_directory(i->path())){
-            O("    DIR \"%s\" -> \"%s\"\n", i->path().string().data(), (dstDirPath/relPath/dstFilename).string().data());
-            relPath /= dstFilename;
-            fs::create_directories(dstDirPath / relPath);
-        }else{
-            O("    FILE \"%s\" -> \"%s\"\n", i->path().string().data(), (dstDirPath/relPath/dstFilename).string().data());
-            File srcFile( i->path().string().data(), "rb");
-            File dstFile((dstDirPath/relPath/dstFilename).string().data(), "wb");
-            ch(srcFile, dstFile);
-        }
-    }
-
+    CryptHelper cryptHelper(argv[1], buf, N);
+    time_t t0 = time(0);
+    cryptHelper(argv[2], argv[3], restoreFlag ? CryptHelper::DECRYPT : CryptHelper::ENCRYPT);
+    time_t t1 = time(0);
+    fprintf(stderr, "TIM %lld sec\n", t1-t0);
     return 0;
 }

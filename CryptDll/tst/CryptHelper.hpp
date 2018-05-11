@@ -12,14 +12,17 @@ protected:
     B64enc      _b64enc;
     B64enc      _b64dec;
     char*       _buf;
-    size_t      _len;
+    size_t      _dim;
 public:
-    CryptHelper(const char* dllFileName, void*buf, size_t len);
+    enum Op{ENCRYPT, DECRYPT};
 
-    int operator()(FILE* srcFile, FILE* dstFile);//encrypt|decrypt source file into destination file
+    CryptHelper(const char*dllFileName, void*buf, size_t len);
 
     const char* encodeStr(const char*str);  //encrypt and base64 encode string; can be used for filenames
     const char* decodeStr(const char*str);  //encrypt and base64 decode string; can be used for filenames
+
+    int operator()(FILE*srcFile, FILE*dstFile);//encrypt|decrypt source file into destination file
+    int operator()(const char*src, const char*dst, Op op);//encrypt|decrypt source (file|dir) into destination directory
 };
 
 #if 0
