@@ -283,27 +283,24 @@ OctetString operator^(const OctetString& k1, const OctetString& k2)
 * Botan is released under the Simplified BSD License (see license.txt)
 */
 
+namespace Botan{
+namespace{
+    static const uint8_t BIN_TO_BASE64[64] = {
+        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+        'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+      //'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', ','  // '/' cannot be used in filenames
+      //'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '(', ')'
+     };
 
-namespace Botan {
-
-namespace {
-
-static const uint8_t BIN_TO_BASE64[64] = {
-   'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-   'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-   'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-   'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-   '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '(', ')'
-};
-
-void do_base64_encode(char out[4], const uint8_t in[3])
-   {
-   out[0] = BIN_TO_BASE64[(in[0] & 0xFC) >> 2];
-   out[1] = BIN_TO_BASE64[((in[0] & 0x03) << 4) | (in[1] >> 4)];
-   out[2] = BIN_TO_BASE64[((in[1] & 0x0F) << 2) | (in[2] >> 6)];
-   out[3] = BIN_TO_BASE64[in[2] & 0x3F];
-   }
-
+    void do_base64_encode(char out[4], const uint8_t in[3]){
+        out[0] = BIN_TO_BASE64[(in[0] & 0xFC) >> 2];
+        out[1] = BIN_TO_BASE64[((in[0] & 0x03) << 4) | (in[1] >> 4)];
+        out[2] = BIN_TO_BASE64[((in[1] & 0x0F) << 2) | (in[2] >> 6)];
+        out[3] = BIN_TO_BASE64[in[2] & 0x3F];
+    }
 }
 
 size_t base64_encode(char out[],
@@ -387,7 +384,9 @@ size_t base64_decode(uint8_t output[],
       0x80, 0xFF, 0xFF, 0x80, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
       0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
       0xFF, 0xFF, 0x80, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
-      0xFF, 0xFF, 0xFF, 0x3E, 0xFF, 0xFF, 0xFF, 0x3F, 0x34, 0x35,
+    //0xFF, 0xFF, 0xFF, 0x3E, 0xFF, 0xFF, 0xFF, 0x3F, 0x34, 0x35,//for + /
+      0xFF, 0xFF, 0xFF, 0x3E, 0x3F, 0xFF, 0xFF, 0xFF, 0x34, 0x35,//for + ,
+    //0x3E, 0x3F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x34, 0x35,//for ( )
       0x36, 0x37, 0x38, 0x39, 0x3A, 0x3B, 0x3C, 0x3D, 0xFF, 0xFF,
       0xFF, 0x81, 0xFF, 0xFF, 0xFF, 0x00, 0x01, 0x02, 0x03, 0x04,
       0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E,
