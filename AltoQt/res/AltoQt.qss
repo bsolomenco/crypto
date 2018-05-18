@@ -1,0 +1,127 @@
+*{
+    background                  : #000000;
+    color                       : #C0C0C0;
+}
+
+/* ======== Q_RoundCornersMainWnd_borderFrm ========*/
+#Q_RoundCornersMainWnd_borderFrm{
+    border                      : 1px solid #404040;
+    border-width                : 6px 6px 6px 6px;
+    border-top-left-radius      : 8px;
+    border-top-right-radius     : 8px;
+    border-bottom-right-radius  : 8px;
+    border-bottom-left-radius   : 8px;
+}
+
+
+/*================ title bar ================*/
+TitleWgt, TitleWgt *{
+    background                  : #404040;/*same as border color to get a nice overall effect*/
+    color                       : #FFFFFF;
+}
+
+TitleWgt #titleLbl{
+    color                       : #C0FFC0;
+    font-weight                 : bold;
+}
+
+TitleWgt #closeBtn{
+    color                       : #FF0000;
+    font-weight                 : bold;
+}
+
+TitleWgt QTabBar{
+}
+TitleWgt QTabBar::tab{
+    background                  : qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #E1E1E1, stop: 0.4 #DDDDDD, stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);/*#808080;*/
+    border                      : 1px solid #202020;
+    border-top-left-radius      : 8px;
+    border-top-right-radius     : 8px;
+    color                       : #000000;
+    margin-bottom               : 0px;
+}
+TitleWgt QTabBar::tab:selected, QTabBar::tab:hover{
+    background                  : qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FFFFF0, stop: 0.4 #F4F4F4, stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);
+}
+TitleWgt QTabBar::tab:selected{
+    border-color                : #9B9B9B;
+    border-bottom-color         : #C2C7CB;
+    font-weight                 : bold;
+    margin-left                 : -4px;
+    margin-right                : -4px;
+}
+TitleWgt QTabBar::tab:first:selected{
+    margin-left                 : 0; /* the first selected tab has nothing to overlap with on the left */
+}
+TitleWgt QTabBar::tab:last:selected{
+    margin-right                : 0px; /* the last selected tab has nothing to overlap with on the right */
+}
+TitleWgt QTabBar::tab:only-one{
+    margin                      : 0px; /* if there is only one tab, we don't want overlapping margins */
+}
+TitleWgt QTabBar::tab:!selected{
+    margin-top                  : 1px; /* make non-selected tabs look smaller */
+}
+
+/*================ main window ================*/
+QMainWindow{
+}
+QMainWindow::separator{
+    background                  : #202020;
+    width                       : 4px;
+    height                      : 4px;
+}
+QMainWindow::separator:hover{
+    background                  : #FF0000;
+}
+
+QDockWidget{
+    background                  : #000000;
+    background-color            : #000000;
+}
+QDockWidget::title{
+    background                  : #202020;
+    text-align                  : center;
+}
+
+/*================ log widget ================*/
+QTextEdit{
+    background                  : #000000;
+    background-color            : #000000;
+    color                       : #C0C0C0;
+}
+
+/*================ buttons ================*/
+QPushButton{
+    background-color            : #4040F0;
+    background-color            : qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #4040F0, stop:0.3 #4040F0, stop:0.9 #4020F0, stop:1 #4020F0);
+    color                       : #C0C0C0;
+    border                      : 1px solid #4040F0;
+    border-width                : 6px 6px 6px 6px;
+    border-top-left-radius      : 4px;
+    border-top-right-radius     : 4px;
+    border-bottom-right-radius  : 4px;
+    border-bottom-left-radius   : 4px;
+}
+
+/*================ progress ================*/
+ProgressWgt QLabel{
+    background-color            : #00D000;
+    color                       : #000000;
+    min-width                   : 200px;
+}
+
+ProgressWgt QLabel:disabled{
+    background-color            : #008000;
+    color                       : #000000;
+    border-radius               : 4px;
+}
+
+/*================ tooltips ================*/
+QToolTip{
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #B0B0B0, stop:0.3 #EEEEEE, stop:0.6 #EEEEEE, stop:1 #808080);
+    /* background: #E7FFFF */
+    border-width    : 0px;
+    border-radius   : 3px;
+    color           : #000000;
+}
