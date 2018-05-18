@@ -3,3 +3,4 @@ Debug
 Release
 build
 x64
+.qmake.stash
